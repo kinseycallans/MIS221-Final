@@ -12,14 +12,13 @@ namespace PA5
         {
 
             string userAnswer;
-            string movieTitle;
-            string movieId;
-            string movieGenre;
-            string releaseYear;
-            bool inStock;
 
+            MovieFile.myMovie = MovieFile.GetAllMovies();
+            for(int i = 0; i < MovieFile.getCount(); i++)
+            {
+                Console.WriteLine(MovieFile.myMovie[i].getMovieTitle());
+            }
 
-            Movie[] myMovie = MovieFile.GetAllMovies();
 
             Movie m = new Movie();
             
@@ -73,15 +72,17 @@ namespace PA5
                         Console.WriteLine("Please enter the release year of the movie you would like to add in the format 'xxxx'.\n");
                         m.setReleaseYear(int.Parse(Console.ReadLine()));
                         m.setStock("Y");
-                        MovieFile.SaveMovie(myMovie);
+                        MovieFile.AddMovie(m);
+                        MovieFile.SaveMovie();
                         break;
                     case "2":
-                        Console.WriteLine("Please enter the title of the movie you would like to remove.\n");
-                        movieTitle = Console.ReadLine();
-                        //m.removeMovie(movieTitle);
+                        Console.WriteLine("Please enter the ID of the movie you would like to remove.\n");
+                        userAnswer = Console.ReadLine();
+                        MovieFile.RemoveMovie(userAnswer);
+                        MovieFile.SaveMovie();
                         break;
                     case "3":
-                        Console.WriteLine("Please enter the title of the movie you would like to edit.\n");
+                        Console.WriteLine("Please enter the ID of the movie you would like to edit.\n");
                         userAnswer = Console.ReadLine();
                         Console.WriteLine("What field of " + userAnswer + " would you like to edit? Please select a number: \n" +
                             "1: Edit " + userAnswer + "'s movie title. \n" +
@@ -115,8 +116,7 @@ namespace PA5
                         Console.WriteLine("Welcome to the Report Menu - Please select a number for the report you would like to run: \n" +
                             "1: Movies currently in stock \n" +
                             "2: Movies currently rented \n" +
-                            "3: Top 5 movies being rented \n" +
-                            "4: Number of rentals by genre \n");
+                            "3: Number of rentals by genre \n");
                         userAnswer = Console.ReadLine();
                         switch (userAnswer)
                         {
@@ -127,9 +127,6 @@ namespace PA5
                                 Console.WriteLine("You've chosen the 'Movies currently rented' report.\n");
                                 break;
                             case "3":
-                                Console.WriteLine("You've chosen the 'Top 5 movies being rented' report.\n");
-                                break;
-                            case "4":
                                 Console.WriteLine("You've chosen the 'Number of rentals by genre' report.\n");
                                 break;
                             default:
